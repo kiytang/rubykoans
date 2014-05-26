@@ -15,14 +15,35 @@
 #
 def triangle(a, b, c)
   # WRITE THIS CODE
-  if a == b && a == c && b == c
-    return :equilateral
-  elsif a == b || a == c || b == c
-    return :isosceles
-  else
-    return :scalene
+ if ( a <= 0 || b <= 0 || c <= 0 )
+      raise TriangleError, "non-positive side"
   end
+  # also test for 3 sides cant make a triangle
+  s = (a + b + c) / 2.0
+  ok = (s - a) * (s - b) * (s - c)     # this must be positive for a triangle
+  if (ok <= 0)
+      raise TriangleError, "bad a,b,c=#{a},#{b},#{c} s=#{s} ok=#{ok}"
+  end
+  if ( a == b )
+      if ( a == c )
+         return :equilateral
+          end
+          return :isosceles
+  else 
+      if ( a == c || b == c )
+        return :isosceles
+          end
+  end
+  return :scalene
 end
+#   if a == b && a == c && b == c
+#     return :equilateral
+#   elsif a == b || a == c || b == c
+#     return :isosceles
+#   else
+#     return :scalene
+#   end
+# end
 
 # Error class used in part 2.  No need to change this code.
 class TriangleError < StandardError
